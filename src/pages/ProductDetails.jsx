@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { use, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "../api/AxiosInstance";
 import { toast } from "react-hot-toast";
 
@@ -11,10 +11,14 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
+import { useSelector } from "react-redux";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+
+  const user = useSelector((state) => state?.usersReducer?.userData);
+  console.log(user);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -78,6 +82,24 @@ const ProductDetails = () => {
             <button className="mt-4 w-full bg-rose-600 text-white py-2 rounded-md hover:bg-rose-700 transition flex items-center justify-center gap-2">
               <FaShoppingCart /> Add to Cart
             </button>
+
+            <div className="admin-buttons">
+              {user && user.isAdmin && (
+                <>
+                  <Link to={`/admin/update-product/${product.id}`}>
+                    <button className="mt-6 mr-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                      Update Product
+                    </button>
+                  </Link>
+
+                  <Link to={`/admin/delete-product/${product.id}`}>
+                    <button className="mt-6 px-4 py-2 bg-rose-600 text-white rounded-md hover:bg-red-700 transition">
+                      Delete Product
+                    </button>
+                  </Link>
+                </>
+              )}
+            </div>
 
             {/*Rating*/}
             <div className="flex items-center mt-4">

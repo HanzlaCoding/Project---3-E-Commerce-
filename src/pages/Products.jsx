@@ -8,24 +8,13 @@ import { Link } from "react-router-dom";
 const Products = () => {
   const dispatch = useDispatch();
 
+  // Get products from Redux store
+  const products = useSelector((state) => state?.productsReducer?.productData);
+
+  // Fetch products on mount
   useEffect(() => {
     dispatch(asyncRenderProducts());
   }, [dispatch]);
-
-  const products = useSelector((state) => state.productsReducer.productData);
-
-  // {
-  //     "id": "1",
-  //     "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-  //     "price": 109.95,
-  //     "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-  //     "category": "men's clothing",
-  //     "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
-  //     "rating": {
-  //         "rate": 3.9,
-  //         "count": 120
-  //     }
-  // }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -43,20 +32,17 @@ const Products = () => {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" />
-                  Clothing
+                  <input type="checkbox" className="mr-2" /> Clothing
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" />
-                  Accessories
+                  <input type="checkbox" className="mr-2" /> Accessories
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" />
-                  Footwear
+                  <input type="checkbox" className="mr-2" /> Footwear
                 </label>
               </li>
             </ul>
@@ -70,20 +56,18 @@ const Products = () => {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <label>
-                  <input type="radio" name="price" className="mr-2" />
-                  Under $50
+                  <input type="radio" name="price" className="mr-2" /> Under $50
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="radio" name="price" className="mr-2" />
-                  $50 - $100
+                  <input type="radio" name="price" className="mr-2" /> $50 -
+                  $100
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="radio" name="price" className="mr-2" />
-                  Over $100
+                  <input type="radio" name="price" className="mr-2" /> Over $100
                 </label>
               </li>
             </ul>
@@ -107,35 +91,30 @@ const Products = () => {
             All Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {products?.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-xl shadow hover:shadow-lg transition p-4"
               >
                 <img
                   src={product.image}
-                  alt={`Product ${product.id}`}
+                  alt={product.title}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
                 <h3 className="text-lg font-semibold text-gray-800">
-                  {`${product.title.slice(0, 30)}...`}
+                  {product.title.length > 30
+                    ? `${product.title.slice(0, 30)}...`
+                    : product.title}
                 </h3>
                 <div className="price-rating flex justify-between items-center mt-2">
                   <p className="text-sm text-gray-800 mt-1">
                     $ {product.price}
                   </p>
-                  <p className="text-sm text-yellow-500 mt-1  whitespace-nowrap rounded-lg">
-                    &#9733;
-                    {product?.rating?.rate}{" "}
-                    {product?.rating?.count ? (
-                      <p className="inline-block text-zinc-800 ml-1">
-                        ({product.rating.count}) reviews
-                      </p>
-                    ) : (
-                      <p className="inline-block text-zinc-800 ml-1">
-                        (0) reviews
-                      </p>
-                    )}
+                  <p className="text-sm text-yellow-500 mt-1 whitespace-nowrap">
+                    &#9733; {product?.rating?.rate}
+                    <span className="text-zinc-800 ml-1">
+                      ({product?.rating?.count || 0} reviews)
+                    </span>
                   </p>
                 </div>
                 <Link to={`/product/${product.id}`}>

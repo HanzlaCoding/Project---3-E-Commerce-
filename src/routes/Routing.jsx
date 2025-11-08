@@ -15,9 +15,7 @@ import ProductDetails from "../pages/ProductDetails";
 
 const Routing = () => {
   const user = useSelector((state) => state?.users?.userData);
-  if (user != null || undefined) {
-    user;
-  } else {
+  if (!user) {
     console.log("unknown user!");
   }
 
@@ -32,7 +30,7 @@ const Routing = () => {
 
         <Route path="/user/user-profile" element={<ProfileUser />}></Route>
         <Route path="/user/order-cart" element={<Cart />}></Route>
-        
+
         <Route path="/product/:id" element={<ProductDetails />}></Route>
 
         <Route path="*" element={<NotFound />}></Route>
