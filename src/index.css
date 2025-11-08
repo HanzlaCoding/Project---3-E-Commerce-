@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* --- 1. Regular/Default Style --- */
+@font-face {
+  font-family: "Helvetica Now Display"; /* Use one clean name for the whole family */
+  font-weight: 400; /* Standard 'regular' weight */
+  src: url("/fonts/HelveticaNowDisplay-Regular.woff2") format("woff2");
+}
+
+/* --- 2. Medium Style --- */
+@font-face {
+  font-family: "Helvetica Now Display";
+  font-weight: 500; /* Standard 'medium' weight */
+  src: url("/fonts/HelveticaNowDisplay-Medium.woff2") format("woff2");
+}
+
+/* --- 3. Extrabold Style --- */
+@font-face {
+  font-family: "Helvetica Now Display";
+  font-weight: 800; /* Standard 'extrabold' weight */
+  src: url("/fonts/HelveticaNowDisplay-Extrabold.woff2") format("woff2");
+}
+
+/* --- 4. Bold Style --- */
+@font-face {
+  font-family: "Helvetica Now Display";
+  font-weight: 700; /* Standard 'bold' weight */
+  src: url("/fonts/HelveticaNowDisplay-Bold.woff2") format("woff2");
+}
+
+/* --- 5. Black Style --- */
+@font-face {
+  font-family: "Helvetica Now Display";
+  font-weight: 900; /* Standard 'black' weight (often 900) */
+  src: url("/fonts/HelveticaNowDisplay-Black.woff2") format("woff2");
+}
+
+* {
+  font-family: "Helvetica Now Display";
+}
