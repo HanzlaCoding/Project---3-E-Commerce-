@@ -14,6 +14,7 @@ const UpdateProduct = () => {
   const productData = useSelector(
     (state) => state?.productsReducer?.productData
   );
+
   const foundProduct = productData.find(
     (prod) => String(prod?.id) === String(id)
   );

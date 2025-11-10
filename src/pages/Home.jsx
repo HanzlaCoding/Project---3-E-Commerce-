@@ -1,9 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const checkLoggedInUser = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      navigate("/products");
+    } else {
+      navigate("/register");
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-50 font-Helvetica-med">
       {/* Navbar */}
@@ -71,7 +80,7 @@ const Home = () => {
             simplicity.
           </p>
           <Link
-            to={"/register"}
+            onClick={checkLoggedInUser}
             className="inline-block bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition transform hover:scale-105"
           >
             Get Started

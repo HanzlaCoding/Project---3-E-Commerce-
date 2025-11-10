@@ -42,14 +42,15 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <NavLink to="/login" className="hover:text-rose-600 transition">
-                  Login
+                <NavLink to="/login">
+                  <button className="px-5 py-2 -mr-3 bg-rose-500 rounded-full text-white">
+                    Login
+                  </button>
                 </NavLink>
-                <NavLink
-                  to="/register"
-                  className="hover:text-rose-600 transition"
-                >
-                  Register
+                <NavLink to="/register">
+                  <button className="px-5 py-2 bg-rose-500 rounded-full text-white">
+                    Register
+                  </button>
                 </NavLink>
               </>
             )}

@@ -30,7 +30,7 @@ const Login = () => {
         dispatch(asyncLoggedInUser(foundUser));
         toast.success("Login successfully! Redirecting...");
         setTimeout(() => {
-          navigate("/");
+          navigate("/products");
         }, 2500);
       } else {
         toast.error("Invalid credentials!");
