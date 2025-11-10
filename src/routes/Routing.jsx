@@ -31,7 +31,7 @@ const Routing = () => {
         <Route path="/user/user-profile" element={<ProfileUser />}></Route>
         <Route path="/user/order-cart" element={<Cart />}></Route>
 
-        <Route path="/product/:id" element={<ProductDetails />}></Route>
+        <Route path="/products/:id" element={<ProductDetails />}></Route>
 
         <Route path="*" element={<NotFound />}></Route>
 

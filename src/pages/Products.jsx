@@ -9,9 +9,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   // Always default to an array
-  const products = useSelector(
-    (state) => state?.productsReducer?.productData
-  );
+  const products = useSelector((state) => state?.productsReducer?.productData);
 
   // Fetch products on mount
   useEffect(() => {
@@ -37,17 +35,22 @@ const Products = () => {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" /> Clothing
+                  <input type="checkbox" className="mr-2" /> Clothes
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" /> Accessories
+                  <input type="checkbox" className="mr-2" /> Furniture
                 </label>
               </li>
               <li>
                 <label>
-                  <input type="checkbox" className="mr-2" /> Footwear
+                  <input type="checkbox" className="mr-2" /> Electronics
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" className="mr-2" /> Wearables
                 </label>
               </li>
             </ul>
@@ -66,7 +69,8 @@ const Products = () => {
               </li>
               <li>
                 <label>
-                  <input type="radio" name="price" className="mr-2" /> $50 - $100
+                  <input type="radio" name="price" className="mr-2" /> $50 -
+                  $100
                 </label>
               </li>
               <li>
@@ -76,22 +80,13 @@ const Products = () => {
               </li>
             </ul>
           </div>
-
-          {/* Color Filter */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Color</h3>
-            <div className="flex gap-2">
-              <span className="w-6 h-6 bg-black rounded-full border cursor-pointer" />
-              <span className="w-6 h-6 bg-white border rounded-full cursor-pointer" />
-              <span className="w-6 h-6 bg-rose-600 rounded-full border cursor-pointer" />
-              <span className="w-6 h-6 bg-gray-400 rounded-full border cursor-pointer" />
-            </div>
-          </div>
         </aside>
 
         {/* Product Grid */}
         <main className="md:col-span-3">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">All Products</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            All Products
+          </h2>
 
           {safeProducts.length === 0 ? (
             <p className="text-gray-500">No products available.</p>
