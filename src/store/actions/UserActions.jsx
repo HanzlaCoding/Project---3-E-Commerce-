@@ -1,5 +1,18 @@
+import toast from "react-hot-toast";
 import axios from "../../api/AxiosInstance";
 import { loadUserData, removeUserData } from "../reducers/UserSlice";
+
+export const asyncUpdateUser = (user, id) => async (dispatch, getState) => {
+  try {
+    console.log(user);
+    await axios.patch(`/users/${id}`, user);
+    localStorage.setItem("user", user);
+    dispatch(loadUserData(user));
+    toast.success("Profile updated successfully!");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const asyncCurrentUser = () => async (dispatch, getState) => {
   try {

@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Left: Animation or Product Showcase */}
-      <div className="w-1/2 bg-white">
+      <div className="w-1/2 h-140 bg-white">
         <LoginAnime />
       </div>
 
@@ -59,7 +59,7 @@ const Login = () => {
             <input
               type="email"
               placeholder="Email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-600 focus:border-rose-600 transition"
+              className="w-full py-2 border-zinc-400 border-b focus:ring-rose-500 focus:outline-none"
               {...register("email", { required: true })}
             />
             {errors.email && (
@@ -68,7 +68,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-600 focus:border-rose-600 transition"
+              className="w-full py-2 border-zinc-400 border-b focus:ring-rose-500 focus:outline-none"
               {...register("password", {
                 required: true,
                 minLength: {

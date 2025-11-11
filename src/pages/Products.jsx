@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncRenderProducts } from "../store/actions/ProductActions";
 import { Link } from "react-router-dom";
+import { BsBagPlus } from "react-icons/bs";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -114,12 +115,15 @@ const Products = () => {
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-xl shadow hover:shadow-lg transition p-4"
+                  className="bg-white rounded-xl shadow hover:shadow-lg transition p-1"
                 >
+                  <div className="absolute z-20 add-cart flex justify-end backdrop-blur-3xl backdrop-opacity-70 opacity-65 bg-zinc-300 w-8 h-8 rounded-full text-rose-600 items-center cursor-pointer mb-2">
+                    <BsBagPlus className="m-auto" />
+                  </div>
                   <img
                     src={product.image}
                     alt={product.title}
-                    className="w-full h-48 object-cover rounded-md mb-4"
+                    className="w-full h-48 object-cover rounded-md mb-4 relative"
                   />
                   <h3 className="text-lg font-semibold text-gray-800">
                     {product.title.length > 30

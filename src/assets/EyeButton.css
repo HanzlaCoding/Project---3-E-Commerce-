@@ -1,0 +1,98 @@
+#button {
+  display: inline-block;
+  height: 30px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eye {
+  fill: none;
+  stroke: #212121;
+  stroke-width: 10;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+}
+
+svg {
+  display: block;
+  width: 20px;
+  width: 20px;
+}
+
+.lid {
+  stroke-dasharray: 222;
+  stroke-dashoffset: 0;
+}
+
+.pupil {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 0;
+  -webkit-transform: rotate(170deg);
+  -moz-transform: rotate(170deg);
+  -o-transform: rotate(170deg);
+  -ms-transform: rotate(170deg);
+  transform: rotate(170deg);
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
+.lid--close {
+  animation: lid--close 0.5s ease-in-out forwards;
+}
+
+.lid--open {
+  animation: lid--open 0.5s ease-in-out forwards;
+}
+
+.pupil--close {
+  animation: pupil--close 0.5s ease-in-out forwards;
+}
+
+.pupil--open {
+  animation: pupil--open 0.5s ease-in-out forwards;
+}
+
+@keyframes lid--close {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -222;
+  }
+}
+
+@keyframes lid--open {
+  from {
+    stroke-dashoffset: -222;
+  }
+
+  to {
+    stroke-dashoffset: -444;
+  }
+}
+
+@keyframes pupil--close {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -150;
+  }
+}
+
+@keyframes pupil--open {
+  from {
+    stroke-dashoffset: -150;
+  }
+
+  to {
+    stroke-dashoffset: -300;
+  }
+}

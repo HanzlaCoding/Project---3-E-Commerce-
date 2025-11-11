@@ -17,10 +17,12 @@ const ProfileUser = () => {
         <div className="bg-white rounded-xl shadow p-6  flex justify-between">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-5xl font-normal tracking-tight text-gray-900">
                 {userData.fullname}
               </h2>
-              <p className="text-sm text-gray-500 mt-2">Joined: Jan 2024</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Member Since - {userData.joinedDate.toString().slice(0, 10)}{" "}
+              </p>
             </div>
           </div>
           <li className="list-none block bg-red-500 px-2 py-1 rounded h-fit">
@@ -65,7 +67,7 @@ const ProfileUser = () => {
             <ul className="space-y-3 text-sm text-gray-700">
               <li>
                 <Link
-                  to="/user/edit-profile"
+                  to={`/user/user-profile/edit-profile/${userData.id}`}
                   className="hover:text-rose-600 transition"
                 >
                   Edit Profile

@@ -1,35 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import EyeButton from "../../components/EyeButton";
+import { useDispatch } from "react-redux";
+import { asyncUpdateUser } from "../../store/actions/UserActions";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditProfile = () => {
-  const userData = JSON.parse(localStorage.getItem("user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    password: "",
-  });
+  const storedUser = localStorage.getItem("user");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const initialData = storedUser
+    ? JSON.parse(storedUser)
+    : {
+        email: "",
+        fullname: "",
+        password: "",
+      };
+
+  const [formData, setFormData] = useState(initialData);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    console.log([e.target.name], e.target.value);
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Updated Profile:", formData);
+    dispatch(asyncUpdateUser(formData, id));
+    navigate("/user/user-profile");
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
       <main className="grow flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
@@ -49,10 +60,10 @@ const EditProfile = () => {
                 type="email"
                 name="email"
                 id="email"
-                value={userData.email}
+                value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-zinc-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                className="w-full py-2 border-zinc-400 border-b focus:ring-rose-500 focus:outline-none"
                 placeholder="Enter your email"
               />
             </div>
@@ -60,7 +71,7 @@ const EditProfile = () => {
             {/* Username */}
             <div>
               <label
-                htmlFor="username"
+                htmlFor="fullname"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Username
@@ -69,11 +80,11 @@ const EditProfile = () => {
                 type="text"
                 name="fullname"
                 id="fullname"
-                value={userData.fullname}
+                value={formData.fullname}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-zinc-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none"
-                placeholder="Enter your Fullname"
+                className="w-full py-2 border-zinc-400 border-b focus:ring-rose-500 focus:outline-none"
+                placeholder="Enter your username"
               />
             </div>
 
@@ -85,19 +96,26 @@ const EditProfile = () => {
               >
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={userData.password}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 bg-zinc-200 rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none"
-                placeholder="Enter new password"
-              />
+              <div className="password-input flex items-center relative">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="w-full py-2 border-zinc-400 border-b focus:ring-rose-500 focus:outline-none"
+                  placeholder="Enter new password"
+                />
+                <div
+                  className="visible toggle absolute right-3 cursor-pointer transition duration-300 text-xl  hover:text-rose-600 hover:scale-110"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  <EyeButton />
+                </div>
+              </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-rose-600 text-white py-2 rounded-lg hover:bg-rose-700 transition"
@@ -108,7 +126,6 @@ const EditProfile = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

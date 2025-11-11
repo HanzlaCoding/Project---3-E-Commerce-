@@ -20,6 +20,7 @@ const Register = () => {
 
   const RegisterHandler = (user) => {
     user.id = nanoid();
+    user.joinedDate = new Date().toISOString();
     user.isAdmin = false;
     if (user) {
       reset();

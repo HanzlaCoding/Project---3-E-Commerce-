@@ -40,7 +40,7 @@ const Routing = () => {
           }
         ></Route>
         <Route
-          path="/user/edit-profile"
+          path="/user/user-profile/edit-profile/:id"
           element={
             <AuthWrapper>
               <EditProfile />

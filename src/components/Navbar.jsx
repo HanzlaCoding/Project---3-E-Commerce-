@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { BsBag } from "react-icons/bs";
 
 const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -10,14 +11,11 @@ const Navbar = () => {
   return (
     <div>
       <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
           <h1 className="text-2xl font-bold text-rose-600 tracking-tight">
             <Link to="/">YourShop</Link>
           </h1>
           <nav className="space-x-6 text-sm text-gray-700 font-medium">
-            <NavLink to="/" className="hover:text-rose-600 transition">
-              Home
-            </NavLink>
             {user ? (
               <>
                 <NavLink
@@ -31,6 +29,15 @@ const Navbar = () => {
                   className="hover:text-rose-600 transition"
                 >
                   Hi 👋, {formattedName ? formattedName : "Error"}
+                </NavLink>
+                <NavLink
+                  to="/cart"
+                  className="inline-block hover:text-rose-600 transition"
+                >
+                  <div className="count bg-rose-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center absolute -mt-5 ml-3 z-20">
+                    1
+                  </div>
+                  <BsBag className="h-5 mb-1 mr-1 absolute top-6" />
                 </NavLink>
               </>
             ) : (
