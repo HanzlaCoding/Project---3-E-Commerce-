@@ -12,9 +12,12 @@ import UpdateProduct from "../pages/admin/UpdateProduct";
 import { useSelector } from "react-redux";
 import NotFound from "../pages/NotFound";
 import ProductDetails from "../pages/ProductDetails";
+import AuthWrapper from "./AuthWrapper";
+import EditProfile from "../pages/user/EditProfiles";
 
 const Routing = () => {
   const user = useSelector((state) => state?.users?.userData);
+
   if (!user) {
     console.log("unknown user!");
   }
@@ -28,18 +31,50 @@ const Routing = () => {
         <Route path="/products" element={<Products />}></Route>
         <Route path="/about" element={<About />}></Route>
 
-        <Route path="/user/user-profile" element={<ProfileUser />}></Route>
-        <Route path="/user/order-cart" element={<Cart />}></Route>
+        <Route
+          path="/user/user-profile"
+          element={
+            <AuthWrapper>
+              <ProfileUser />
+            </AuthWrapper>
+          }
+        ></Route>
+        <Route
+          path="/user/edit-profile"
+          element={
+            <AuthWrapper>
+              <EditProfile />
+            </AuthWrapper>
+          }
+        ></Route>
+        <Route
+          path="/user/order-cart"
+          element={
+            <AuthWrapper>
+              <Cart />
+            </AuthWrapper>
+          }
+        ></Route>
+        <Route
+          path="/admin/create-product"
+          element={
+            <AuthWrapper>
+              <CreateProduct />
+            </AuthWrapper>
+          }
+        ></Route>
+        <Route
+          path="/admin/update-product/:id"
+          element={
+            <AuthWrapper>
+              <UpdateProduct />
+            </AuthWrapper>
+          }
+        ></Route>
 
         <Route path="/products/:id" element={<ProductDetails />}></Route>
 
         <Route path="*" element={<NotFound />}></Route>
-
-        <Route path="/admin/create-product" element={<CreateProduct />}></Route>
-        <Route
-          path="/admin/update-product/:id"
-          element={<UpdateProduct />}
-        ></Route>
       </Routes>
     </>
   );

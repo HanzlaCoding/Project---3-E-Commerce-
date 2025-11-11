@@ -6,7 +6,6 @@ const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const username = user?.fullname?.toString()?.split(" ");
   const formattedName = username ? username[0] : "Loading...";
-  console.log(user);
 
   return (
     <div>
@@ -16,14 +15,8 @@ const Navbar = () => {
             <Link to="/">YourShop</Link>
           </h1>
           <nav className="space-x-6 text-sm text-gray-700 font-medium">
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "text-rose-500" : "")}
-            >
+            <NavLink to="/" className="hover:text-rose-600 transition">
               Home
-            </NavLink>
-            <NavLink to="/about" className="hover:text-rose-600 transition">
-              About
             </NavLink>
             {user ? (
               <>
@@ -42,6 +35,14 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-rose-500" : ""
+                  }
+                >
+                  Home
+                </NavLink>
                 <NavLink to="/login">
                   <button className="px-5 py-2 -mr-3 bg-rose-500 rounded-full text-white">
                     Login
@@ -54,6 +55,9 @@ const Navbar = () => {
                 </NavLink>
               </>
             )}
+            {/* <NavLink to="/about" className="hover:text-rose-600 transition">
+              About
+            </NavLink> */}
           </nav>
         </div>
       </header>

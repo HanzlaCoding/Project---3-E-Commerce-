@@ -31,25 +31,6 @@ const ProductDetails = () => {
 
   const user = useSelector((state) => state?.usersReducer?.userData);
 
-  const relatedProducts = [
-    {
-      title: "Polo with Contrast Trims",
-      price: 1999,
-      image: foundProduct?.image,
-    },
-    {
-      title: "Gradient Graphic T-shirt",
-      price: 1799,
-      image: foundProduct?.image,
-    },
-    {
-      title: "Polo with Tipping Details",
-      price: 2199,
-      image: foundProduct?.image,
-    },
-    { title: "Striped Jacket", price: 2999, image: foundProduct?.image },
-  ];
-
   if (!foundProduct) {
     return (
       <div className="min-h-screen flex justify-center items-center text-gray-500">
@@ -64,13 +45,11 @@ const ProductDetails = () => {
       <div className="w-full px-10 py-12 rounded-xl min-h-screen">
         {/* Product Section */}
         <div className="grid md:grid-cols-2 gap-10 items-start">
-          <div className="space-y-4">
             <img
               src={foundProduct?.image}
               alt={foundProduct?.title}
-              className="w-full h-140 object-contain rounded-lg "
+              className="w-full h-140 object-cover rounded-4xl"
             />
-          </div>
 
           <div>
             <h1 className="text-5xl font-normal leading-15 text-gray-800 mt-2">

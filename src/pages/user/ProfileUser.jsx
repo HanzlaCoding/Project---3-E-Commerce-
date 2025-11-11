@@ -8,7 +8,6 @@ import { asyncLogoutUser } from "../../store/actions/UserActions";
 const ProfileUser = () => {
   const dispatch = useDispatch();
   const userData = JSON.parse(localStorage.getItem("user"));
-  console.log(userData);
 
   return (
     <div className="min-h-screen bg-gray-50 font-Helvetica-med">
@@ -66,18 +65,10 @@ const ProfileUser = () => {
             <ul className="space-y-3 text-sm text-gray-700">
               <li>
                 <Link
-                  to="/edit-profile"
+                  to="/user/edit-profile"
                   className="hover:text-rose-600 transition"
                 >
                   Edit Profile
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/change-password"
-                  className="hover:text-rose-600 transition"
-                >
-                  Change Password
                 </Link>
               </li>
               <li>

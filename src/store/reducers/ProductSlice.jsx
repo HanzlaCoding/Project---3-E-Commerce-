@@ -9,7 +9,6 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     loadProductData: (state, action) => {
-      console.log(state, action);
       state.productData = action.payload;
     },
   },

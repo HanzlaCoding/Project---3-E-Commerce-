@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,17 +7,43 @@ import { Link } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   // Always default to an array
-  const products = useSelector((state) => state?.productsReducer?.productData);
+  const storeProducts = useSelector(
+    (state) => state.productsReducer.productData || []
+  );
+
+  // Filter products by category
+  const filterProducts = (category) => {
+    const filtered = storeProducts.filter(
+      (product) => product.category === category
+    );
+    setFilteredProducts(filtered);
+  };
+
+  // Filter products by price
+  const filterByPrice = (priceOrder) => {
+    let sorted = [...filteredProducts]; // copy current filtered list
+
+    if (priceOrder === "High to Low") {
+      sorted.sort((a, b) => b.price - a.price);
+    } else if (priceOrder === "Low to High") {
+      sorted.sort((a, b) => a.price - b.price);
+    }
+
+    setFilteredProducts(sorted);
+  };
 
   // Fetch products on mount
   useEffect(() => {
     dispatch(asyncRenderProducts());
   }, [dispatch]);
 
-  // Ensure products is always an array
-  const safeProducts = Array.isArray(products) ? products : [];
+  // Update filteredProducts when storeProducts changes
+  useEffect(() => {
+    setFilteredProducts(storeProducts);
+  }, [storeProducts]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -33,26 +59,22 @@ const Products = () => {
               Category
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>
-                <label>
-                  <input type="checkbox" className="mr-2" /> Clothes
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" className="mr-2" /> Furniture
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" className="mr-2" /> Electronics
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="checkbox" className="mr-2" /> Wearables
-                </label>
-              </li>
+              {["Wearables", "Clothes", "Furniture", "Electronics"].map(
+                (item) => (
+                  <li key={item}>
+                    <label htmlFor={item} className="flex items-center">
+                      <input
+                        type="radio"
+                        name="category"
+                        id={item}
+                        onClick={() => filterProducts(item)}
+                        className="mr-2 accent-rose-600 focus:ring-rose-600"
+                      />
+                      <span className="capitalize">{item}</span>
+                    </label>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
@@ -62,22 +84,19 @@ const Products = () => {
               Price Range
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>
-                <label>
-                  <input type="radio" name="price" className="mr-2" /> Under $50
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="radio" name="price" className="mr-2" /> $50 -
-                  $100
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input type="radio" name="price" className="mr-2" /> Over $100
-                </label>
-              </li>
+              {["High to Low", "Low to High"].map((price) => (
+                <li key={price}>
+                  <label>
+                    <input
+                      type="radio"
+                      onClick={() => filterByPrice(price)}
+                      name="price"
+                      className="mr-2 accent-rose-600 focus:ring-rose-600"
+                    />
+                    {price}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
         </aside>
@@ -88,11 +107,11 @@ const Products = () => {
             All Products
           </h2>
 
-          {safeProducts.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <p className="text-gray-500">No products available.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {safeProducts.map((product) => (
+              {filteredProducts.map((product) => (
                 <div
                   key={product.id}
                   className="bg-white rounded-xl shadow hover:shadow-lg transition p-4"
