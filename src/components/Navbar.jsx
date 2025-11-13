@@ -7,6 +7,8 @@ const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const username = user?.fullname?.toString()?.split(" ");
   const formattedName = username ? username[0] : "Loading...";
+  const cartData = useSelector((state) => state.cartReducer.cartItems);
+  console.log(cartData);
 
   return (
     <div>
@@ -31,13 +33,18 @@ const Navbar = () => {
                   Hi 👋, {formattedName ? formattedName : "Error"}
                 </NavLink>
                 <NavLink
-                  to="/cart"
-                  className="inline-block hover:text-rose-600 transition"
+                  to="/user/order-cart"
+                  className="relative inline-block hover:text-rose-600 transition"
                 >
-                  <div className="count bg-rose-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center absolute -mt-5 ml-3 z-20">
-                    1
-                  </div>
-                  <BsBag className="h-5 mb-1 mr-1 absolute top-6" />
+                  {/* Cart Icon */}
+                  <BsBag className="h-5" />
+
+                  {/* Badge */}
+                  {cartData.length > 0 && (
+                    <div className="count bg-rose-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center absolute -top-2 -right-2 z-20">
+                      {cartData.length}
+                    </div>
+                  )}
                 </NavLink>
               </>
             ) : (

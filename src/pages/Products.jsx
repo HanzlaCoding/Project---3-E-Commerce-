@@ -3,12 +3,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncRenderProducts } from "../store/actions/ProductActions";
+import { addToCart } from "../store/reducers/CartSlice";
 import { Link } from "react-router-dom";
 import { BsBagPlus } from "react-icons/bs";
 
 const Products = () => {
   const dispatch = useDispatch();
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [notification, setNotification] = useState("");
 
   // Always default to an array
   const storeProducts = useSelector(
@@ -25,7 +27,7 @@ const Products = () => {
 
   // Filter products by price
   const filterByPrice = (priceOrder) => {
-    let sorted = [...filteredProducts]; // copy current filtered list
+    let sorted = [...filteredProducts];
 
     if (priceOrder === "High to Low") {
       sorted.sort((a, b) => b.price - a.price);
@@ -34,6 +36,22 @@ const Products = () => {
     }
 
     setFilteredProducts(sorted);
+  };
+
+  // Add to cart handler
+  const handleAddToCart = (product) => {
+    dispatch(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        quantity: 1,
+      })
+    );
+
+    setNotification(`${product.title} added to cart!`);
+    setTimeout(() => setNotification(""), 3000);
   };
 
   // Fetch products on mount
@@ -49,6 +67,14 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
+
+      {/* Notification Toast */}
+      {notification && (
+        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse">
+          {notification}
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Sidebar Filters */}
         <aside className="bg-white h-fit rounded-xl shadow p-6 space-y-6 md:col-span-1">
@@ -115,37 +141,53 @@ const Products = () => {
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-xl shadow hover:shadow-lg transition p-1"
+                  className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 relative group"
                 >
-                  <div className="absolute z-20 add-cart flex justify-end backdrop-blur-3xl backdrop-opacity-70 opacity-65 bg-zinc-300 w-8 h-8 rounded-full text-rose-600 items-center cursor-pointer mb-2">
-                    <BsBagPlus className="m-auto" />
+                  <div className="relative overflow-hidden rounded-md mb-4">
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className="w-full h-48 object-cover rounded-md group-hover:scale-105 transition duration-300"
+                    />
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="absolute top-2 right-2 bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-full shadow-lg transition transform hover:scale-110 z-10"
+                    >
+                      <BsBagPlus size={20} />
+                    </button>
                   </div>
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-48 object-cover rounded-md mb-4 relative"
-                  />
+
                   <h3 className="text-lg font-semibold text-gray-800">
                     {product.title.length > 30
                       ? `${product.title.slice(0, 30)}...`
                       : product.title}
                   </h3>
+
                   <div className="price-rating flex justify-between items-center mt-2">
-                    <p className="text-sm text-gray-800 mt-1">
+                    <p className="text-lg font-bold text-rose-600">
                       $ {product.price}
                     </p>
                     <p className="text-sm text-yellow-500 mt-1 whitespace-nowrap">
                       &#9733; {product.rate || 0}
                       <span className="text-zinc-800 ml-1">
-                        ({product.count || 0} reviews)
+                        ({product.count || 0})
                       </span>
                     </p>
                   </div>
-                  <Link to={`/products/${product.id}`}>
-                    <button className="mt-4 w-full bg-rose-600 text-white py-2 rounded-lg hover:bg-rose-700 transition">
-                      View Details
+
+                  <div className="flex gap-2 mt-4">
+                    <Link to={`/products/${product.id}`} className="flex-1">
+                      <button className="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition">
+                        Details
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className="flex-1 bg-rose-600 text-white py-2 rounded-lg hover:bg-rose-700 transition font-semibold"
+                    >
+                      Add to Cart
                     </button>
-                  </Link>
+                  </div>
                 </div>
               ))}
             </div>
