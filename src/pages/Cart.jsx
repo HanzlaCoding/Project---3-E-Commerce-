@@ -3,13 +3,13 @@ import Navbar from "../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, updateQuantity } from "../store/reducers/CartSlice";
 
-// ...existing code...
 
 const Cart = ({
   onRemove = null,
   onCheckout = () => {},
   onUpdateQuantity = null,
 }) => {
+  
   const dispatch = useDispatch();
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
